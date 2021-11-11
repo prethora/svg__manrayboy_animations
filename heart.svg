@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="27.638069mm"
-   height="25.647837mm"
-   viewBox="0 0 27.638069 25.647837"
+   width="37.638069mm"
+   height="35.647837mm"
+   viewBox="0 0 37.638069 35.647837"
    version="1.1"
    id="svg5"
    inkscape:version="1.1.1 (3bf5ae0, 2021-09-20)"
@@ -34,15 +34,60 @@
      inkscape:current-layer="layer1" />
   <defs
      id="defs2" />
+     <rect width="100%" height="100%" fill="white" visibility="hidden" />
+     <g id="ani" transform="scale(1.1,1.1) translate(-1,1)">
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-102.13198,-157.32137)">
+     transform="translate(-97.33198,-151.32137)">
     <path
        id="path112-3"
        style="fill:#e4706d;fill-opacity:1;stroke:#e4706d;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 115.85208,182.87081 c 9.6698,-8.69063 9.69343,-8.6896 9.69343,-8.6896 0,0 5.63437,-5.19146 3.67888,-11.24538 -1.95549,-6.05392 -7.2361,-5.42226 -7.2361,-5.42226 0,0 -3.16814,-0.79574 -6.03728,3.35589 m -0.0989,22.00135 c -9.6698,-8.69063 -9.4956,-8.6896 -9.4956,-8.6896 0,0 -5.63436,-5.19146 -3.67887,-11.24538 1.95549,-6.05392 7.23609,-5.42226 7.23609,-5.42226 0,0 3.16814,-0.79574 6.03728,3.35589"
        sodipodi:nodetypes="ccsccccscc" />
   </g>
+  </g>
+  <script type="text/javascript"><![CDATA[ 
+    function setAnimation(s,d)
+    {
+        const aniElem = document.getElementById("ani");
+        aniElem.setAttribute("transform","scale("+s+","+s+") translate("+d+","+d+")");        
+    }
+
+    document.documentElement.addEventListener("load",function()
+    {
+        var start;
+        var previousTimeStamp;
+        var rotationDuration = 1700;
+        var pauseProportion = 0.486666667;
+        var beatProportion = 1-pauseProportion;
+
+        function step(timestamp)
+        {
+            if (start===undefined) start = timestamp;
+            var elapsed = timestamp-start;
+            if (previousTimeStamp!==timestamp) 
+            {
+                var ratio = (elapsed%rotationDuration)/rotationDuration;
+                if (ratio<=beatProportion)
+                {
+                    var actualRatio = ratio/beatProportion;
+                    var f = Math.abs(Math.sin(actualRatio*Math.PI*2));
+                    setAnimation(1+f*0.2,f*-3);        
+                }
+                else
+                {
+                    setAnimation(1,0);
+                }
+            }
+
+            previousTimeStamp = timestamp;
+            requestAnimationFrame(step);
+        }
+
+        requestAnimationFrame(step);
+        
+    });
+  ]]></script>
 </svg>
